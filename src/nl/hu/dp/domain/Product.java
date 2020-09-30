@@ -2,6 +2,7 @@ package nl.hu.dp.domain;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Product {
@@ -13,8 +14,8 @@ public class Product {
     private String beschrijving;
     private double prijs;
 
-    @Transient
-    private ArrayList<OVChipkaart> ovChipkaarten = new ArrayList<>();
+    @ManyToMany(mappedBy = "producten")
+    private List<OVChipkaart> ovChipkaarten = new ArrayList<>();
 
     // Constructors
     public Product(int product_nummer, String naam, String beschrijving, double prijs) {
@@ -56,7 +57,7 @@ public class Product {
         this.prijs = prijs;
     }
 
-    public ArrayList<OVChipkaart> getOVChipkaarten() {
+    public List<OVChipkaart> getOVChipkaarten() {
         return ovChipkaarten;
     }
     public void setOVChipkaarten(ArrayList<OVChipkaart> ovChipkaarten) {

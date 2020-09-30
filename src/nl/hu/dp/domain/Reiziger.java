@@ -21,7 +21,11 @@ public class Reiziger {
     )
     private Adres adres;
 
-    @Transient
+    @OneToMany(
+            mappedBy = "reiziger",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<OVChipkaart> ovChipkaarten = new ArrayList<>();
 
     // Constructors

@@ -3,6 +3,7 @@ package nl.hu.dp.domain;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity @Table(name = "ov_chipkaart")
 public class OVChipkaart {
@@ -14,10 +15,17 @@ public class OVChipkaart {
     private LocalDate geldig_tot;
     private double saldo;
 
-    @Transient
+    @ManyToOne
+    @JoinColumn(name = "reiziger_id")
     private Reiziger reiziger;
-    @Transient
-    private ArrayList<Product> producten = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "ov_chipkaart_product",
+            joinColumns = @JoinColumn(name = "kaart_nummer"),
+            inverseJoinColumns = @JoinColumn(name = "product_nummer")
+    )
+    private List<Product> producten = new ArrayList<>();
 
     // Constructors
     public OVChipkaart(int kaart_nummer, LocalDate geldig_tot, int klasse, double saldo, Reiziger reiziger) {
@@ -68,7 +76,7 @@ public class OVChipkaart {
         this.reiziger = reiziger;
     }
 
-    public ArrayList<Product> getProducten() {
+    public List<Product> getProducten() {
         return producten;
     }
     public void setProducten(ArrayList<Product> producten) {
